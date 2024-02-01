@@ -1,6 +1,6 @@
 ---
 services:
-  foo-service:
+  bookstore:
     build:
       context: ./
     init: true

@@ -5,17 +5,17 @@ const envoyAddress = 'http://127.0.0.1:20000'
 
 const main = async () => {
   // pass array in request body
-  // both persons are returned in the response
-  const res1 = await fetch(`${envoyAddress}/pass-array-of-objects`, {
+  // both books are returned in the response
+  const res1 = await fetch(`${envoyAddress}/echoBooks`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        persons: [
-          {first_name: 'Hello', last_name: 'World'},
-          {first_name: 'Foo', last_name: 'Bar'},
+        books: [
+          {author: 'Hello', title: 'World'},
+          {author: 'Foo', title: 'Bar'},
         ],
       }),
     }
@@ -24,8 +24,8 @@ const main = async () => {
   console.log('response body', await res1.json(), '\n')
 
   // pass array in query string
-  // note that only one person is returned (Foo Bar), the other one is lost (Hello World)
-  const res2 = await fetch(`${envoyAddress}/pass-array-of-objects?persons.first_name=Hello&persons.last_name=World&persons.first_name=Foo&persons.last_name=Bar`, {
+  // note that only one book is returned (Foo Bar), the other one is lost (Hello World)
+  const res2 = await fetch(`${envoyAddress}/echoBooks?books.author=Hello&books.title=World&books.author=Foo&books.title=Bar`, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

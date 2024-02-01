@@ -10,7 +10,7 @@ const grpcPort = 10000
 
 util.inspect.defaultOptions.depth = 5
 
-const protoPath = path.resolve(__dirname, 'foobar.proto')
+const protoPath = path.resolve(__dirname, 'bookstore.proto')
 const packageDefinition = protoLoader.loadSync(protoPath, {
   keepCase   : true,
   defaults   : false,
@@ -24,16 +24,16 @@ const protoDescriptor = grpc.loadPackageDefinition(packageDefinition)
 const server = new grpc.Server()
 
 const methodImplementations = {
-  PassArrayOfObjects (call, callback) {
-    console.log(`PassArrayOfObjects called with the following parameters:\n`, call.request, '\n')
+  EchoBooks (call, callback) {
+    console.log(`EchoBooks called with the following parameters:\n`, call.request, '\n')
     callback(null, {
-      persons: call.request.persons,
+      books: call.request.books,
     })
   },
 }
-server.addService(protoDescriptor.dev.foobar.FooService.service, methodImplementations)
+server.addService(protoDescriptor.bookstore.Bookstore.service, methodImplementations)
 
-console.log(`Starting Foo service`)
+console.log(`Starting Bookstore service`)
 server.bindAsync(
   `0.0.0.0:${grpcPort}`,
   grpc.ServerCredentials.createInsecure(),
@@ -43,5 +43,5 @@ server.bindAsync(
     }
 
     server.start()
-    console.log(`Foo service is listening on port ${grpcPort}`)
+    console.log(`Bookstore service is listening on port ${grpcPort}`)
 })

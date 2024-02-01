@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package bookstore;
+
+import "google/api/annotations.proto";
+
+message Book {
+  string author = 1;
+  string title = 2;
+}
+
+message EchoBooksRequest {
+  repeated Book books = 1;
+}
+
+message EchoBooksResponse {
+  repeated Book books = 1;
+}
+
+service Bookstore {
+  rpc EchoBooks (EchoBooksRequest) returns (EchoBooksResponse) {
+    option (google.api.http) = {
+      post: "/echoBooks"
+    };
+  }
+}

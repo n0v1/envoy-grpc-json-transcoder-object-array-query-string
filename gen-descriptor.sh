@@ -7,6 +7,6 @@ protoc \
   --proto_path=./ \
   --descriptor_set_out=./descriptor_set.pb \
   --include_imports \
-  foobar.proto
+  bookstore.proto
 
 echo 'done'

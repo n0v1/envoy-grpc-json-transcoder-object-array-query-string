@@ -26,15 +26,15 @@ static_resources:
             - name: local_service
               domains: ["*"]
               routes:
-              - match: {prefix: "/dev.foobar.FooService"}
-                route: {cluster: cluster_foo-service, timeout: {seconds: 60}}
+              - match: {prefix: "/bookstore.Bookstore"}
+                route: {cluster: cluster_bookstore, timeout: {seconds: 60}}
           http_filters:
           - name: envoy.filters.http.grpc_json_transcoder
             typed_config:
               "@type": type.googleapis.com/envoy.extensions.filters.http.grpc_json_transcoder.v3.GrpcJsonTranscoder
               proto_descriptor: "/etc/envoy/descriptor_set.pb"
               services:
-              - "dev.foobar.FooService"
+              - "bookstore.Bookstore"
               convert_grpc_status: true
               print_options:
                 add_whitespace: true
@@ -47,7 +47,7 @@ static_resources:
               "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
 
   clusters:
-  - name: cluster_foo-service
+  - name: cluster_bookstore
     connect_timeout: 1.25s
     type: logical_dns
     lb_policy: round_robin
@@ -60,5 +60,5 @@ static_resources:
         - endpoint:
             address:
               socket_address:
-                address: foo-service
+                address: bookstore
                 port_value: 10000
