@@ -5,6 +5,7 @@ const envoyAddress = 'http://127.0.0.1:20000'
 
 const main = async () => {
   // pass array in request body
+  // both persons are returned in the response
   const res1 = await fetch(`${envoyAddress}/pass-array-of-objects`, {
       method: 'POST',
       headers: {
@@ -23,6 +24,7 @@ const main = async () => {
   console.log('response body', await res1.json(), '\n')
 
   // pass array in query string
+  // note that only one person is returned (Foo Bar), the other one is lost (Hello World)
   const res2 = await fetch(`${envoyAddress}/pass-array-of-objects?persons.first_name=Hello&persons.last_name=World&persons.first_name=Foo&persons.last_name=Bar`, {
     method: 'POST',
     headers: {
