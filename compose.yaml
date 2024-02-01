@@ -1,0 +1,20 @@
+---
+services:
+  foo-service:
+    build:
+      context: ./
+    init: true
+    # environment:
+    # - GRPC_VERBOSITY=debug
+    # - GRPC_TRACE=all
+    ports:
+    - 10000:10000
+
+  envoy:
+    build:
+      context: ./
+      dockerfile: Dockerfile-envoy
+    # command: [--config-path, /etc/envoy/envoy.yaml, --log-level, trace, --component-log-level, 'grpc:trace,dns:info,conn_handler:info,upstream:info,connection:info,http:info,main:info']
+    ports:
+    - 9901:9901  # admin web interface
+    - 20000:20000  # grpc json transcoder

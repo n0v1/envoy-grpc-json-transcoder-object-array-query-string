@@ -1,0 +1,47 @@
+#!/usr/bin/env node
+'use strict'
+
+const path = require('node:path')
+const util = require('node:util')
+const grpc = require('@grpc/grpc-js')
+const protoLoader = require('@grpc/proto-loader')
+
+const grpcPort = 10000
+
+util.inspect.defaultOptions.depth = 5
+
+const protoPath = path.resolve(__dirname, 'foobar.proto')
+const packageDefinition = protoLoader.loadSync(protoPath, {
+  keepCase   : true,
+  defaults   : false,
+  enums      : String,
+  includeDirs: [
+    path.resolve(__dirname, './')
+  ]
+})
+const protoDescriptor = grpc.loadPackageDefinition(packageDefinition)
+
+const server = new grpc.Server()
+
+const methodImplementations = {
+  PassArrayOfObjects (call, callback) {
+    console.log(`PassArrayOfObjects called with the following parameters:`, call.request)
+    callback(null, {
+      persons: call.request.persons,
+    })
+  },
+}
+server.addService(protoDescriptor.dev.foobar.FooService.service, methodImplementations)
+
+console.log(`Starting Foo service`)
+server.bindAsync(
+  `0.0.0.0:${grpcPort}`,
+  grpc.ServerCredentials.createInsecure(),
+  (err) => {
+    if (err) {
+      throw new Error(`Could not start gRPC server on port ${grpcPort}`, err)
+    }
+
+    server.start()
+    console.log(`Foo service is listening on port ${grpcPort}`)
+})
