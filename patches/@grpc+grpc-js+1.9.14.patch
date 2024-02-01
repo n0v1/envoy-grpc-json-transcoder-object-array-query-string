@@ -1,0 +1,20 @@
+diff --git a/node_modules/@grpc/grpc-js/build/src/server-call.js b/node_modules/@grpc/grpc-js/build/src/server-call.js
+index 4092c3e..6215c44 100644
+--- a/node_modules/@grpc/grpc-js/build/src/server-call.js
++++ b/node_modules/@grpc/grpc-js/build/src/server-call.js
+@@ -381,6 +381,15 @@ class Http2ServerCallStream extends events_1.EventEmitter {
+                 }
+                 call.emit('receiveMessage');
+                 const requestBytes = Buffer.concat(body, receivedLength);
++
++                // output raw protobuf buffer for debugging
++                console.log('\n==================================================')
++                console.log('received new protobug message')
++                console.log('raw buffer:\n', requestBytes, '\n')
++                console.log(`hex string:\n${requestBytes.toString('hex')}\n`)
++                console.log(`utf8 string (wrapped in >>> <<<):\n>>>${requestBytes.toString('utf8')}<<<`)
++                console.log('==================================================\n')
++
+                 const compressed = requestBytes.readUInt8(0) === 1;
+                 const compressedMessageEncoding = compressed ? encoding : 'identity';
+                 const decompressedMessage = call.getDecompressedMessage(requestBytes, compressedMessageEncoding);

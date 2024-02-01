@@ -4,7 +4,8 @@ EXPOSE 10000
 
 ENV NODE_ENV="production"
 COPY package*.json ./
-RUN npm install
+COPY patches/      ./patches/
+RUN npm ci
 
 COPY google/   ./google/
 COPY *.proto   ./

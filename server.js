@@ -25,7 +25,7 @@ const server = new grpc.Server()
 
 const methodImplementations = {
   PassArrayOfObjects (call, callback) {
-    console.log(`PassArrayOfObjects called with the following parameters:`, call.request)
+    console.log(`PassArrayOfObjects called with the following parameters:\n`, call.request, '\n')
     callback(null, {
       persons: call.request.persons,
     })
