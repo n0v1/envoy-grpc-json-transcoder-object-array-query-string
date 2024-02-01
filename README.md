@@ -16,6 +16,8 @@ curl --header 'Accept:application/json' --header 'Content-Type:application/json'
 
 -> Both books are received and returned by gRPC service.
 
+Raw protobuf binary: [protobufs/protobuf-1.bin](protobufs/protobuf-1.bin)
+
 Raw protobuf buffer sent (33 bytes):
 ```text
 <Buffer 00 00 00 00 1c 0a 0e 0a 05 48 65 6c 6c 6f 12 05 57 6f 72 6c 64 0a 0a 0a 03 46 6f 6f 12 03 42 61 72>
@@ -43,6 +45,8 @@ curl --header 'Accept:application/json' --header 'Content-Type:application/json'
 
 -> Only last book (Foo Bar) is returned by gRPC service, the other one is lost (Hello World).
 
+Raw protobuf binary: [protobufs/protobuf-2.bin](protobufs/protobuf-2.bin)
+
 Raw protobuf buffer sent (31 bytes):
 ```text
 <Buffer 00 00 00 00 1a 0a 18 0a 05 48 65 6c 6c 6f 12 05 57 6f 72 6c 64 0a 03 46 6f 6f 12 03 42 61 72>
@@ -67,4 +71,4 @@ Make sure you have Docker including Docker Compose plugin installed.
 1. `docker compose build`
 2. `docker compose up`
 3. Send requests via curl: `./send-requests.sh` or nodejs: `./send-requests.js`
-4. Observe logs of bookstore service and response
+4. Observe logs of bookstore service, binary files written to `protobufs/` and responses

@@ -1,8 +1,21 @@
 diff --git a/node_modules/@grpc/grpc-js/build/src/server-call.js b/node_modules/@grpc/grpc-js/build/src/server-call.js
-index 4092c3e..c571f52 100644
+index 4092c3e..5973ea6 100644
 --- a/node_modules/@grpc/grpc-js/build/src/server-call.js
 +++ b/node_modules/@grpc/grpc-js/build/src/server-call.js
-@@ -381,6 +381,15 @@ class Http2ServerCallStream extends events_1.EventEmitter {
+@@ -27,6 +27,12 @@ const metadata_1 = require("./metadata");
+ const stream_decoder_1 = require("./stream-decoder");
+ const logging = require("./logging");
+ const error_1 = require("./error");
++
++let counter = 1
++const fs = require('node:fs')
++const protobufDir = '/tmp/protobufs'
++fs.mkdirSync(protobufDir, {recursive: true})
++
+ const TRACER_NAME = 'server_call';
+ const unzip = (0, util_1.promisify)(zlib.unzip);
+ const inflate = (0, util_1.promisify)(zlib.inflate);
+@@ -381,6 +387,18 @@ class Http2ServerCallStream extends events_1.EventEmitter {
                  }
                  call.emit('receiveMessage');
                  const requestBytes = Buffer.concat(body, receivedLength);
@@ -10,6 +23,9 @@ index 4092c3e..c571f52 100644
 +                // output raw protobuf buffer for debugging
 +                console.log('\n==================================================')
 +                console.log(`received new protobuf message for ${call.handler.path}`)
++                const filePath = `${protobufDir}/protobuf-${counter++}.bin`
++                fs.writeFileSync(filePath, requestBytes, 'binary')
++                console.log(`raw buffer stored in ${filePath}`)
 +                console.log(`raw buffer (${requestBytes.length} bytes):\n`, requestBytes, '\n')
 +                console.log(`hex string:\n${requestBytes.toString('hex')}\n`)
 +                console.log(`utf8 string (wrapped in >>> <<<):\n>>>${requestBytes.toString('utf8')}<<<`)

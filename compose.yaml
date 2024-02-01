@@ -7,6 +7,8 @@ services:
     # environment:
     # - GRPC_VERBOSITY=debug
     # - GRPC_TRACE=all
+    volumes:
+    - ./protobufs:/tmp/protobufs/
     ports:
     - 10000:10000
 
