@@ -9,6 +9,6 @@ RUN npm ci
 
 COPY google/   ./google/
 COPY *.proto   ./
-COPY server.js ./
+COPY bookstore.js ./
 
-CMD ["node", "server.js"]
+CMD ["node", "bookstore.js"]

@@ -4,9 +4,13 @@
 const envoyAddress = 'http://127.0.0.1:20000'
 
 const main = async () => {
+  let url
+
   // pass array in request body
   // both books are returned in the response
-  const res1 = await fetch(`${envoyAddress}/echoBooks`, {
+  url = `${envoyAddress}/echoBooks`
+  console.log(`Calling ${url}`)
+  const res1 = await fetch(url, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -20,19 +24,21 @@ const main = async () => {
       }),
     }
   )
-  console.log('response status code', res1.status)
+  console.log('status code', res1.status)
   console.log('response body', await res1.json(), '\n')
 
   // pass array in query string
   // note that only one book is returned (Foo Bar), the other one is lost (Hello World)
-  const res2 = await fetch(`${envoyAddress}/echoBooks?books.author=Hello&books.title=World&books.author=Foo&books.title=Bar`, {
+  url = `${envoyAddress}/echoBooks?books.author=Hello&books.title=World&books.author=Foo&books.title=Bar`
+  console.log(`Calling ${url}`)
+  const res2 = await fetch(url, {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
   })
-  console.log('response status code', res2.status)
+  console.log('status code', res2.status)
   console.log('response body', await res2.json())
 }
 
