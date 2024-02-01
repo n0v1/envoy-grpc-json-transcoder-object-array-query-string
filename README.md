@@ -18,6 +18,13 @@ curl --header 'Accept:application/json' --header 'Content-Type:application/json'
 
 Raw protobuf binary: [protobufs/protobuf-1.bin](protobufs/protobuf-1.bin)
 
+`xxd protobufs/protobuf-1.bin`:
+```text
+00000000: 0000 0000 1c0a 0e0a 0548 656c 6c6f 1205  .........Hello..
+00000010: 576f 726c 640a 0a0a 0346 6f6f 1203 4261  World....Foo..Ba
+00000020: 72
+```
+
 Raw protobuf buffer sent (33 bytes):
 ```text
 <Buffer 00 00 00 00 1c 0a 0e 0a 05 48 65 6c 6c 6f 12 05 57 6f 72 6c 64 0a 0a 0a 03 46 6f 6f 12 03 42 61 72>
@@ -46,6 +53,12 @@ curl --header 'Accept:application/json' --header 'Content-Type:application/json'
 -> Only last book (Foo Bar) is returned by gRPC service, the other one is lost (Hello World).
 
 Raw protobuf binary: [protobufs/protobuf-2.bin](protobufs/protobuf-2.bin)
+
+`xxd protobufs/protobuf-2.bin`:
+```text
+00000000: 0000 0000 1a0a 180a 0548 656c 6c6f 1205  .........Hello..
+00000010: 576f 726c 640a 0346 6f6f 1203 4261 72    World..Foo..Bar
+```
 
 Raw protobuf buffer sent (31 bytes):
 ```text
