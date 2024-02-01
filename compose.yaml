@@ -2,7 +2,7 @@
 services:
   bookstore:
     build:
-      context: ./
+      dockerfile: Dockerfile-bookstore
     init: true
     # environment:
     # - GRPC_VERBOSITY=debug
@@ -12,7 +12,6 @@ services:
 
   envoy:
     build:
-      context: ./
       dockerfile: Dockerfile-envoy
     # command: [--config-path, /etc/envoy/envoy.yaml, --log-level, trace, --component-log-level, 'grpc:trace,dns:info,conn_handler:info,upstream:info,connection:info,http:info,main:info']
     ports:
