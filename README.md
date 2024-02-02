@@ -1,6 +1,8 @@
 # Passing Array of Objects via Envoy gRPC-JSON Transcoder
 
-I noticed that Envoy sends (or at least the gRPC service receives) a different protobuf buffer depending on how request data is sent to Envoy.
+I noticed that Envoy sends (or at least the upstream gRPC service receives) a different protobuf message depending on how request data is sent to Envoy.
+
+This has been filed as [Envoy issue #32143](https://github.com/envoyproxy/envoy/issues/32143).
 
 ## Data sent in request body
 
@@ -84,4 +86,4 @@ Make sure you have Docker including Docker Compose plugin installed.
 1. `docker compose build`
 2. `docker compose up`
 3. Send requests via curl: `./send-requests.sh` or nodejs: `./send-requests.js`
-4. Observe logs of bookstore service, binary files written to `protobufs/` and responses
+4. Observe logs of bookstore service, binary files written to `protobufs/` and server response
