@@ -13,7 +13,8 @@ DATA='{
     {"author": "Foo", "title": "Bar"}
   ]
 }'
-curl --header 'Accept:application/json' --header 'Content-Type:application/json' --data "${DATA}" --request 'POST' 'http://127.0.0.1:20000/echoBooks'
+HEADERS='--header Accept:application/json --header Content-Type:application/json'
+curl ${HEADERS} --data "${DATA}" --request 'POST' 'http://127.0.0.1:20000/echoBooks'
 ```
 
 -> Both books are received and returned by gRPC service.
@@ -49,7 +50,8 @@ FooBar
 ## Data sent in query string
 
 ```shell
-curl --header 'Accept:application/json' --header 'Content-Type:application/json' --request 'POST' 'http://127.0.0.1:20000/echoBooks?books.author=Hello&books.title=World&books.author=Foo&books.title=Bar'
+HEADERS='--header Accept:application/json --header Content-Type:application/json'
+curl ${HEADERS} --request 'POST' 'http://127.0.0.1:20000/echoBooks?books.author=Hello&books.title=World&books.author=Foo&books.title=Bar'
 ```
 
 -> Only last book (Foo Bar) is returned by gRPC service, the other one is lost (Hello World).
